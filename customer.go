@@ -15,6 +15,7 @@ const customersResourceName = "customers"
 // See: https://help.shopify.com/api/reference/customer
 type CustomerService interface {
 	List(interface{}) ([]Customer, error)
+	ListWithPagination(options interface{}) ([]Customer, *Pagination, error)
 	Count(interface{}) (int, error)
 	Get(int64, interface{}) (*Customer, error)
 	Search(interface{}) ([]Customer, error)
@@ -89,6 +90,19 @@ func (s *CustomerServiceOp) List(options interface{}) ([]Customer, error) {
 	resource := new(CustomersResource)
 	err := s.client.Get(path, resource, options)
 	return resource.Customers, err
+}
+
+// ListWithPagination lists customers and return pagination to retrieve next/previous results.
+func (s *CustomerServiceOp) ListWithPagination(options interface{}) ([]Customer, *Pagination, error) {
+	path := fmt.Sprintf("%s.json", customersBasePath)
+	resource := new(CustomersResource)
+
+	pagination, err := s.client.ListWithPagination(path, resource, options)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return resource.Customers, pagination, nil
 }
 
 // Count customers
