@@ -385,23 +385,24 @@ type RefundLineItem struct {
 
 type OrderAdjustment struct {
 	ID           int64        `json:"id,omitempty"`
-	Amount       string       `json:"amount,omitempty"`
+	Amount       float64      `json:"amount,omitempty"`
 	AmountSet    AmountSet    `json:"amount_set,omitempty"`
 	Kind         string       `json:"kind,omitempty"`
 	OrderID      int64        `json:"order_id,omitempty"`
 	Reason       string       `json:"reason,omitempty"`
 	RefundID     int64        `json:"refund_id,omitempty"`
-	TaxAmount    string       `json:"tax_amount,omitempty"`
+	TaxAmount    float64      `json:"tax_amount,omitempty"`
 	TaxAmountSet TaxAmountSet `json:"tax_amount_set,omitempty"`
 }
+
 type ShopMoney struct {
-	Amount       string `json:"amount,omitempty"`
-	CurrencyCode string `json:"currency_code,omitempty"`
+	Amount       float64 `json:"amount,omitempty"`
+	CurrencyCode string  `json:"currency_code,omitempty"`
 }
 
 type PresentmentMoney struct {
-	Amount       string `json:"amount,omitempty"`
-	CurrencyCode string `json:"currency_code,omitempty"`
+	Amount       float64 `json:"amount,omitempty"`
+	CurrencyCode string  `json:"currency_code,omitempty"`
 }
 
 type TaxAmountSet struct {
