@@ -1,0 +1,49 @@
+{
+  "transactions": [
+    {
+      "id": 2341251940616,
+      "type": "payout",
+      "test": false,
+      "payout_id": 107718148360,
+      "payout_status": "paid",
+      "currency": "EUR",
+      "amount": "-24872.13",
+      "fee": "0.00",
+      "net": "-24872.13",
+      "source_id": 107718148360,
+      "source_type": "payout",
+      "source_order_id": null,
+      "source_order_transaction_id": null
+    },
+    {
+      "id": 2340966039816,
+      "type": "refund",
+      "test": false,
+      "payout_id": 107718148360,
+      "payout_status": "paid",
+      "currency": "EUR",
+      "amount": "-1799.00",
+      "fee": "0.00",
+      "net": "-1799.00",
+      "source_id": 125170712840,
+      "source_type": "Payments::Refund",
+      "source_order_id": 5993275490568,
+      "source_order_transaction_id": 7025920868616
+    },
+    {
+      "id": 2340691575048,
+      "type": "charge",
+      "test": false,
+      "payout_id": 107718148360,
+      "payout_status": "paid",
+      "currency": "EUR",
+      "amount": "199.00",
+      "fee": "4.88",
+      "net": "194.12",
+      "source_id": 2574156792072,
+      "source_type": "charge",
+      "source_order_id": 5995595661576,
+      "source_order_transaction_id": 7025037148424
+    }
+  ]
+}

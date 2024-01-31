@@ -3,13 +3,12 @@ package goshopify
 import (
 	"errors"
 	"fmt"
+	"github.com/jarcoal/httpmock"
+	"github.com/shopspring/decimal"
 	"net/http"
 	"reflect"
 	"testing"
 	"time"
-
-	"github.com/jarcoal/httpmock"
-	"github.com/shopspring/decimal"
 )
 
 func TestPayoutsList(t *testing.T) {
@@ -201,5 +200,70 @@ func TestPayoutsGet(t *testing.T) {
 	}
 	if !reflect.DeepEqual(payout, expected) {
 		t.Errorf("Payouts.Get returned %+v, expected %+v", payout, expected)
+	}
+}
+
+func TestPayoutsTransactionsForPayout(t *testing.T) {
+	setup()
+	defer teardown()
+
+	httpmock.RegisterResponder("GET", fmt.Sprintf("https://fooshop.myshopify.com/%s/shopify_payments/balance/transactions.json?payout_id=107718148360", client.pathPrefix),
+		httpmock.NewBytesResponder(200, loadFixture("payout_transactions.json")))
+
+	transactions, err := client.Payouts.TransactionsForPayout(107718148360)
+	if err != nil {
+		t.Errorf("Payouts.Transactions returned error: %v", err)
+	}
+
+	expected := []PayoutTransaction{
+		{
+			ID:                       2341251940616,
+			Type:                     "payout",
+			Test:                     false,
+			PayoutID:                 107718148360,
+			PayoutStatus:             "paid",
+			Currency:                 "EUR",
+			Amount:                   decimal.NewFromFloat(-24872.13),
+			Fee:                      decimal.NewFromFloat(0.00),
+			Net:                      decimal.NewFromFloat(-24872.13),
+			SourceID:                 107718148360,
+			SourceType:               "payout",
+			SourceOrderID:            0,
+			SourceOrderTransactionID: 0,
+		},
+		{
+			ID:                       2340966039816,
+			Type:                     "refund",
+			Test:                     false,
+			PayoutID:                 107718148360,
+			PayoutStatus:             "paid",
+			Currency:                 "EUR",
+			Amount:                   decimal.NewFromFloat(-1799.00),
+			Fee:                      decimal.NewFromFloat(0.00),
+			Net:                      decimal.NewFromFloat(-1799.00),
+			SourceID:                 125170712840,
+			SourceType:               "Payments::Refund",
+			SourceOrderID:            5993275490568,
+			SourceOrderTransactionID: 7025920868616,
+		},
+		{
+			ID:                       2340691575048,
+			Type:                     "charge",
+			Test:                     false,
+			PayoutID:                 107718148360,
+			PayoutStatus:             "paid",
+			Currency:                 "EUR",
+			Amount:                   decimal.NewFromFloat(199.00),
+			Fee:                      decimal.NewFromFloat(4.88),
+			Net:                      decimal.NewFromFloat(194.12),
+			SourceID:                 2574156792072,
+			SourceType:               "charge",
+			SourceOrderID:            5995595661576,
+			SourceOrderTransactionID: 7025037148424,
+		},
+	}
+
+	if !reflect.DeepEqual(transactions, expected) {
+		t.Errorf("Payouts.Get returned %+v, expected %+v", transactions, expected)
 	}
 }
