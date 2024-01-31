@@ -210,7 +210,7 @@ func TestPayoutsTransactionsForPayout(t *testing.T) {
 	httpmock.RegisterResponder("GET", fmt.Sprintf("https://fooshop.myshopify.com/%s/shopify_payments/balance/transactions.json?payout_id=107718148360", client.pathPrefix),
 		httpmock.NewBytesResponder(200, loadFixture("payout_transactions.json")))
 
-	transactions, err := client.Payouts.TransactionsForPayout(107718148360)
+	transactions, _, err := client.Payouts.TransactionsForPayout(107718148360)
 	if err != nil {
 		t.Errorf("Payouts.Transactions returned error: %v", err)
 	}

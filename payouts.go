@@ -19,7 +19,7 @@ type PayoutsService interface {
 	List(interface{}) ([]Payout, error)
 	ListWithPagination(interface{}) ([]Payout, *Pagination, error)
 	Get(int64, interface{}) (*Payout, error)
-	TransactionsForPayout(int64) ([]PayoutTransaction, error)
+	TransactionsForPayout(int64) ([]PayoutTransaction, *Pagination, error)
 }
 
 // PayoutsServiceOp handles communication with the payout related methods of the
@@ -106,16 +106,16 @@ func (s *PayoutsServiceOp) Get(id int64, options interface{}) (*Payout, error) {
 }
 
 // TransactionsForPayout load all transactions for given payout ID
-func (s *PayoutsServiceOp) TransactionsForPayout(payoutID int64) ([]PayoutTransaction, error) {
+func (s *PayoutsServiceOp) TransactionsForPayout(payoutID int64) ([]PayoutTransaction, *Pagination, error) {
 	path := fmt.Sprintf("%s.json?payout_id=%d", payoutTransactionsBasePath, payoutID)
 	resource := new(PayoutTransactionsResource)
 
-	_, err := s.client.ListWithPagination(path, resource, nil)
+	pagination, err := s.client.ListWithPagination(path, resource, nil)
 	if err != nil {
-		return nil, err
+		return nil, pagination, err
 	}
 
-	return resource.Transactions, nil
+	return resource.Transactions, pagination, nil
 }
 
 type PayoutTransaction struct {
