@@ -43,13 +43,12 @@ type PayoutsListOptions struct {
 
 // Payout represents a Shopify payout
 type Payout struct {
-	Id          int64           `json:"id,omitempty"`
-	Date        OnlyDate        `json:"date,omitempty"`
-	Currency    string          `json:"currency,omitempty"`
-	Amount      decimal.Decimal `json:"amount,omitempty"`
-	Fees        decimal.Decimal `json:"charge_fees,omitempty"`
-	ChargeGross decimal.Decimal `json:"charge_gross,omitempty"`
-	Status      PayoutStatus    `json:"status,omitempty"`
+	Id       int64           `json:"id,omitempty"`
+	Date     OnlyDate        `json:"date,omitempty"`
+	Currency string          `json:"currency,omitempty"`
+	Amount   decimal.Decimal `json:"amount,omitempty"`
+	Fees     decimal.Decimal `json:"fee_amount,omitempty"`
+	Status   PayoutStatus    `json:"status,omitempty"`
 }
 
 type PayoutStatus string
