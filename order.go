@@ -335,6 +335,7 @@ type Transaction struct {
 	ID             int64            `json:"id,omitempty"`
 	OrderID        int64            `json:"order_id,omitempty"`
 	Amount         *decimal.Decimal `json:"amount,omitempty"`
+	PaymentID      string           `json:"payment_id"`
 	Kind           string           `json:"kind,omitempty"`
 	Gateway        string           `json:"gateway,omitempty"`
 	Status         string           `json:"status,omitempty"`
