@@ -47,8 +47,8 @@ type Payout struct {
 	Date     OnlyDate        `json:"date,omitempty"`
 	Currency string          `json:"currency,omitempty"`
 	Amount   decimal.Decimal `json:"amount,omitempty"`
-	Fees     decimal.Decimal `json:"fee_amount,omitempty"`
 	Status   PayoutStatus    `json:"status,omitempty"`
+	Summary  PayoutSummary   `json:"summary,omitempty"`
 }
 
 type PayoutStatus string
@@ -60,6 +60,19 @@ const (
 	PayoutStatusFailed    PayoutStatus = "failed"
 	PayoutStatusCancelled PayoutStatus = "canceled"
 )
+
+type PayoutSummary struct {
+	AdjustmentsFeeAmount      decimal.Decimal `json:"adjustments_fee_amount,omitempty"`
+	AdjustmentsGrossAmount    decimal.Decimal `json:"adjustments_gross_amount,omitempty"`
+	ChargesFeeAmount          decimal.Decimal `json:"charges_fee_amount,omitempty"`
+	ChargesGrossAmount        decimal.Decimal `json:"charges_gross_amount,omitempty"`
+	RefundsFeeAmount          decimal.Decimal `json:"refunds_fee_amount,omitempty"`
+	RefundsGrossAmount        decimal.Decimal `json:"refunds_gross_amount,omitempty"`
+	ReservedFundsFeeAmount    decimal.Decimal `json:"reserved_funds_fee_amount,omitempty"`
+	ReservedFundsGrossAmount  decimal.Decimal `json:"reserved_funds_gross_amount,omitempty"`
+	RetriedPayoutsFeeAmount   decimal.Decimal `json:"retried_payouts_fee_amount,omitempty"`
+	RetriedPayoutsGrossAmount decimal.Decimal `json:"retried_payouts_gross_amount,omitempty"`
+}
 
 // Represents the result from the payouts/X.json endpoint
 type PayoutResource struct {
