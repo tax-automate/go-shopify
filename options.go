@@ -3,6 +3,7 @@ package goshopify
 import (
 	"fmt"
 	"net/http"
+	"time"
 )
 
 // Option is used to configure client with options
@@ -36,5 +37,12 @@ func WithLogger(logger LeveledLoggerInterface) Option {
 func WithHTTPClient(client *http.Client) Option {
 	return func(c *Client) {
 		c.Client = client
+	}
+}
+
+// WithTimeout is used to set a custom timeout for the http client
+func WithTimeout(timeout time.Duration) Option {
+	return func(c *Client) {
+		c.Client.Timeout = timeout
 	}
 }
